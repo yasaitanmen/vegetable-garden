@@ -151,14 +151,42 @@ void sendLineNotification(String message) {
 }
 
 /**
+ * @brief 4G経由でGoogleスプレッドシート(GAS)へログデータを送信
+ * @param valveAction バルブ動作内容 ("OPEN_90s" / "NONE")
+ * @param reason 動作理由 ("Auto (Moisture < 35%)" / "Manual" 等)
+ * @param photoBase64 写真データ (JPEG Base64文字列, なければ空文字)
+ */
+void logDataToGoogleSheets(String valveAction, String reason, String photoBase64 = "") {
+  Serial.println("[Google Logger] Sending log data to Google Sheets / Drive...");
+  
+  // 送信JSONデータの構築
+  String jsonPayload = "{";
+  jsonPayload += "\"moisture\":" + String(soilMoisture, 1) + ",";
+  jsonPayload += "\"ec\":" + String(soilEC, 2) + ",";
+  jsonPayload += "\"temp\":" + String(soilTemperature, 1) + ",";
+  jsonPayload += "\"valveAction\":\"" + valveAction + "\",";
+  jsonPayload += "\"reason\":\"" + reason + "\",";
+  jsonPayload += "\"status\":\"" + String(soilEC < EC_ALERT_THRESHOLD ? "FERTILIZER_LOW" : "OK") + "\"";
+  if (photoBase64.length() > 0) {
+    jsonPayload += ",\"photoBase64\":\"" + photoBase64 + "\"";
+  }
+  jsonPayload += "}";
+
+  Serial.println("[Google Logger] Payload: " + jsonPayload);
+  // HTTPS POST to GAS_WEBAPP_URL
+}
+
+/**
  * @brief 毎日の定時スケジュール実行 (朝の給水判定・写真送信)
  */
 void checkDailySchedule() {
-  // RTCまたはNTP時刻と照合して実行
   // 朝 6:30 の給水判定
   // if (currentHour == SCHEDULE_WATER_HOUR && currentMin == SCHEDULE_WATER_MIN) {
   //   if (soilMoisture < WATER_THRESHOLD_MOISTURE) {
   //     executeWatering(VALVE_OPEN_DURATION_SEC);
+  //     logDataToGoogleSheets("OPEN_" + String(VALVE_OPEN_DURATION_SEC) + "s", "Auto Moisture Low");
+  //   } else {
+  //     logDataToGoogleSheets("NONE", "Moisture OK (Skip)");
   //   }
   // }
 }

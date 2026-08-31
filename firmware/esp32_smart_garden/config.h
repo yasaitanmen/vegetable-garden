@@ -18,6 +18,9 @@
 #define LINE_TOKEN    "YOUR_LINE_ACCESS_TOKEN"
 #define LINE_USER_ID  "YOUR_LINE_USER_ID" // またはグループID
 
+// Google スプレッドシート / GAS エンドポイント URL
+#define GAS_WEBAPP_URL "https://script.google.com/macros/s/YOUR_GAS_DEPLOYMENT_ID/exec"
+
 // ==========================================
 // 2. ピンアサイン設定 (LilyGO T-SIM7600 / ESP32)
 // ==========================================
