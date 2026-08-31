@@ -10,8 +10,8 @@
 | :-: | :--- | :--- | :-: | :-: | :--- |
 | 1 | **4G LTEマイコン** | `LilyGO TTGO T-SIM7600G-H ESP32 4G LTE` | 1 | 約 4,200 円 | nanoSIMスロット、4Gアンテナ付属 |
 | 2 | **広角カメラモジュール** | `ESP32-CAM OV2640 with 120/160 Degree Wide Angle Lens` | 1 | 約 1,200 円 | 200万画素、広角レンズ付き |
-| 3 | **土壌EC(肥料)・水分・温度 3-in-1センサー** | `RS485 Soil Moisture Temperature EC Sensor 3-in-1` | 1 | 約 2,800 円 | **追肥判定用EC電極** ＆ 給水用水分電極が一体化 |
-| 4 | **RS485通信基板** | `TTL to RS485 MAX485 Converter Module` | 1 | 約 150 円 | マイコンとECマルチセンサーの通信用 |
+| 3 | **土壌 水分・ECセンサー** | `RS485 Soil Moisture Temperature EC Sensor 3-in-1` | 1 | 約 2,800 円 | 自動給水用の**水分** ＆ 追肥判定用の**EC(肥料)**を1本で計測 |
+| 4 | **RS485通信基板** | `TTL to RS485 MAX485 Converter Module` | 1 | 約 150 円 | マイコンと水分・ECセンサーの通信用 |
 | 5 | **リレーモジュール** | `1 Channel 5V/12V Relay Module with Optocoupler` | 1 | 約 200 円 | 電動バルブ開閉スイッチ用 |
 | 6 | **降圧DC-DC基板** | `LM2596 DC-DC Buck Converter 12V to 5V (2pcs)` | 1組 | 約 300 円 | 12Vからマイコン用5Vを生成 |
 | 7 | **防水ACアダプター** | `12V 3A IP67 Waterproof Power Supply Adapter` | 1 | 約 1,200 円 | AC100V入力、屋外防水仕様 |
