@@ -112,8 +112,8 @@ void executeWatering(int durationSeconds) {
   digitalWrite(PIN_VALVE_RELAY, LOW);  // バルブ閉
   Serial.println("[Watering] 12V電動バルブ閉鎖完了");
 
-  // 給水完了のLINE通知
-  sendLineNotification("🌿 自動給水完了: 雨水バルブを" + String(durationSeconds) + "秒間開放しました。\n現在の水分量: " + String(soilMoisture, 1) + "%");
+  // 給水完了のログ ＆ Discord写真付き通知 (GAS経由)
+  logDataToGoogleSheets("OPEN_" + String(durationSeconds) + "s", "Auto Moisture Low");
 }
 
 /**
@@ -125,8 +125,8 @@ void checkFertilizerAlert() {
     // 1週間に1回のみ通知 (多重通知防止)
     if (millis() - lastAlertTime > 7UL * 24 * 3600 * 1000 || lastAlertTime == 0) {
       lastAlertTime = millis();
-      String msg = "⚠️ 【追肥サイン】土壌の肥料濃度(EC)が低下しています (現在: " + String(soilEC, 2) + " mS/cm)\n今週末にスプーン1杯の化成肥料をあげてください！";
-      sendLineNotification(msg);
+      Serial.println("[Alert] Soil EC is low. Triggering Discord alert via GAS...");
+      logDataToGoogleSheets("NONE", "EC Low (Fertilizer Alert)");
     }
   }
 }
@@ -143,21 +143,13 @@ void init4GModem() {
 }
 
 /**
- * @brief 4G経由でLINEへメッセージを送信
- */
-void sendLineNotification(String message) {
-  Serial.println("[LINE Notify] " + message);
-  // HTTP POSTリクエストでLINE Notify APIまたはMessaging APIを呼び出し
-}
-
-/**
- * @brief 4G経由でGoogleスプレッドシート(GAS)へログデータを送信
+ * @brief 4G経由でGoogleスプレッドシート(GAS)へデータ送信 (GAS側でDiscord通知も自動実行)
  * @param valveAction バルブ動作内容 ("OPEN_90s" / "NONE")
  * @param reason 動作理由 ("Auto (Moisture < 35%)" / "Manual" 等)
  * @param photoBase64 写真データ (JPEG Base64文字列, なければ空文字)
  */
 void logDataToGoogleSheets(String valveAction, String reason, String photoBase64 = "") {
-  Serial.println("[Google Logger] Sending log data to Google Sheets / Drive...");
+  Serial.println("[Logger] Sending data to Google Sheets & Drive & Discord...");
   
   // 送信JSONデータの構築
   String jsonPayload = "{";

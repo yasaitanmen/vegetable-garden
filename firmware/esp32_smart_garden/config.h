@@ -14,11 +14,8 @@
 #define APN_USER      ""
 #define APN_PASS      ""
 
-// LINE Messaging API または LINE Notify 設定
-#define LINE_TOKEN    "YOUR_LINE_ACCESS_TOKEN"
-#define LINE_USER_ID  "YOUR_LINE_USER_ID" // またはグループID
-
-// Google スプレッドシート / GAS エンドポイント URL
+// Google Apps Script (GAS) Webhook URL
+// ※GAS側でスプレッドシート記録 ＆ Google Drive写真保存 ＆ Discordリッチ通知を自動実行します
 #define GAS_WEBAPP_URL "https://script.google.com/macros/s/YOUR_GAS_DEPLOYMENT_ID/exec"
 
 // ==========================================
